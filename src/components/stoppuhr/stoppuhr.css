@@ -1,0 +1,15 @@
+.stoppuhr {
+    font-size: 25px;
+    font-family: "Times New Roman";
+    font-weight: bold;
+    height: 40px;
+    width: 600px;
+    border: 2.5px solid darkblue;
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px #575656;
+    background: #add8e6;
+    margin: 15px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
