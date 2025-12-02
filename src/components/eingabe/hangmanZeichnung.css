@@ -76,7 +76,7 @@ button:disabled {
 
 .armLinks {
     position: absolute;
-    top: 145px;
+    top: 147.5px;
     left: 125px;
     width: 50px;
     height: 10px;
@@ -86,7 +86,7 @@ button:disabled {
 
 .armRechts {
     position: absolute;
-    top: 145px;
+    top: 147.5px;
     left: 165px;
     width: 50px;
     height: 10px;
