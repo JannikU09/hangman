@@ -2,11 +2,14 @@
 
 import { useAtom } from "jotai";
 import { buchstabeState } from "@/src/state/buchstabeState";
-import { Buchstaben } from "@/src/models/buchstabe";
 import { useMemo } from "react";
 import { MaterialReactTable, MRT_ColumnDef, useMaterialReactTable } from "material-react-table"
 import { Box } from "@mui/material";
 import { FC } from "react";
+
+type Buchstaben = {
+    value: string
+}
 
 export const BuchstabenTable: FC = () => {
 
