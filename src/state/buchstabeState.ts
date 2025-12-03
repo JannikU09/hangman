@@ -1,4 +1,7 @@
 import { atom } from "jotai";
-import { Buchstaben } from "../models/buchstabe";
+
+type Buchstaben = {
+    value: string;
+}
 
 export const buchstabeState = atom<Buchstaben[]>([]);
