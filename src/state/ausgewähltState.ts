@@ -1,3 +1,3 @@
-import { atom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
-export const ausgewähltState = atom<string>('de');
+export const ausgewähltState = atomWithStorage('ausgewähltState', <string>("de"));
