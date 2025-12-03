@@ -1,3 +1,3 @@
-import { atom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
-export const splittedWortState = atom<string[]>([]);
+export const splittedWortState = atomWithStorage("splittedWortState", <string[]>([]));
