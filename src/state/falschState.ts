@@ -1,3 +1,3 @@
-import { atom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
-export const falschState = atom<number>(0);
+export const falschState = atomWithStorage("falschState", <number>(0));
