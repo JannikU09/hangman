@@ -1,7 +1,7 @@
-import { atom } from "jotai";
+import {atomWithStorage} from 'jotai/utils';
 
 type Buchstaben = {
     value: string;
 }
 
-export const buchstabeState = atom<Buchstaben[]>([]);
+export const buchstabeState = atomWithStorage('buchstabeState', <Buchstaben[]>([]));
