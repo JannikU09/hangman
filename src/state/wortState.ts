@@ -1,3 +1,3 @@
-import { atom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
-export const wortState = atom<string>("");
+export const wortState = atomWithStorage("wortState", <string>(""));
