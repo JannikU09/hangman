@@ -7,20 +7,20 @@ import { Title } from "@/src/components/title/title";
 import { Eingabe } from "@/src/components/eingabe/eingabe";
 import { Stoppuhr } from "@/src/components/stoppuhr/stoppuhr";
 import { BuchstabenTable } from "@/src/components/table/buchstabenTable";
-import { Reset } from "@/src/components/reset/reset";
 import SprachenAuswahl from "@/src/components/sprache/sprachenAuswahl";
+import SimpleDialogDemo from "@/src/components/dialog/dialog";
 
 export default function Page() {
     return (
         <>
             <Title title="Hangman" size="bigTitle" />
 
-            <Stoppuhr/>
+            <Stoppuhr />
             <Words />
             <Eingabe />
-            <Reset/>
             <BuchstabenTable />
-            <SprachenAuswahl/>
+            <SprachenAuswahl />
+            <SimpleDialogDemo />
         </>
     )
 }
