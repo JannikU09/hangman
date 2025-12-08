@@ -23,7 +23,7 @@ export default function SprachenAuswahl() {
             <FormControl sx={{
                 width: "150px",
                 margin: "15px",
-                bottom: "560px",
+                bottom: "540px",
                 left: "1225px",
             }}>
                 <InputLabel id="auswahlLable">Sprache</InputLabel>
