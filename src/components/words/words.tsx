@@ -8,6 +8,7 @@ import { Eingabe } from "../eingabe/eingabe";
 import { wortState } from "@/src/state/wortState";
 import { Title } from "../title/title";
 import { ausgewähltState } from "@/src/state/ausgewähltState";
+import { optionenState } from "@/src/state/optionenState";
 
 
 type Wort = {
@@ -23,8 +24,8 @@ export const Words = () => {
     const [wort, setWort] = useAtom(wortState);
     const [laenge, setLaenge] = useState<number>(0);
     const [buchstabenList, setBuchstabenList] = useAtom(buchstabeState);
-    const [anzahl, setAnzahl] = useState<number>(1);
     const [sprache, setSprache] = useAtom(ausgewähltState);
+    const [selectedValue, setSelectedValue] = useAtom(optionenState)
 
 
     useEffect(() => {
@@ -36,7 +37,7 @@ export const Words = () => {
 
                 if (daten.length === 0) {
                     superWortFetch();
-                }
+                };
 
                 console.log("Daten: ", daten);
                 return daten[0]
@@ -44,18 +45,18 @@ export const Words = () => {
             } catch (error: unknown) {
                 if (error instanceof Error) {
                     console.log(error)
-                }
-            }
+                };
+            };
         };
+        console.log("Test", selectedValue);
 
         const superWort = async () => {
             try {
                 const daten = await superWortFetch();
-
-                if (!daten || daten.length > 15) {
+                if (!daten || daten.length > 18 || daten.word.includes(" ") || selectedValue === "Neustarten") {
                     await superWort();
                     return;
-                }
+                };
 
                 //Wort und Länge werden gesetzt.
                 setWort(daten.word);
@@ -65,12 +66,12 @@ export const Words = () => {
             } catch (error: unknown) {
                 if (error instanceof Error) {
                     console.log(error);
-                }
-            }
+                };
+            };
         };
         superWort();
 
-    }, [sprache]);
+    }, [sprache, selectedValue]);
 
     useEffect(() => {
         setWort(wort.replace(/ß/g, "SS"));
@@ -78,12 +79,7 @@ export const Words = () => {
 
     const mehrere = wort.includes(" ");
 
-    useEffect(() => {
-        setAnzahl(mehrere ? 2 : 1);
-        console.log("mehrere", mehrere)
-    }, [mehrere]);
-
-
+    console.log("mehere", mehrere);
     console.log("Buchstaben: ", buchstabenList);
     console.log("Wortlänge", laenge);
 
@@ -91,7 +87,6 @@ export const Words = () => {
     return (
         <>
             {/* <Title title={`Wort: ${wort} || Länge: ${laenge}`} size="smallTitle" /> */}
-            <Title title={mehrere ? `${anzahl} Wörter` : `${anzahl} Wort`} size="smallTitle" />
         </>
     )
 };
