@@ -10,7 +10,7 @@ import { Title } from "../title/title";
 import { ausgewähltState } from "@/src/state/ausgewähltState";
 
 
-interface Wort {
+type Wort = {
     word: string,
     length: number,
     category: string,
@@ -22,7 +22,6 @@ export const Words = () => {
 
     const [wort, setWort] = useAtom(wortState);
     const [laenge, setLaenge] = useState<number>(0);
-    const [loading, setLoading] = useState<boolean>(true);
     const [buchstabenList, setBuchstabenList] = useAtom(buchstabeState);
     const [anzahl, setAnzahl] = useState<number>(1);
     const [sprache, setSprache] = useAtom(ausgewähltState);
@@ -67,8 +66,6 @@ export const Words = () => {
                 if (error instanceof Error) {
                     console.log(error);
                 }
-            } finally {
-                setLoading(false);
             }
         };
         superWort();
@@ -93,7 +90,7 @@ export const Words = () => {
 
     return (
         <>
-            {/* <Title title={loading ? "Wort und Länge werden geladen..." : `Wort: ${wort} || Länge: ${laenge}`} size="smallTitle" /> */}
+            {/* <Title title={`Wort: ${wort} || Länge: ${laenge}`} size="smallTitle" /> */}
             <Title title={mehrere ? `${anzahl} Wörter` : `${anzahl} Wort`} size="smallTitle" />
         </>
     )
