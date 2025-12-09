@@ -21,9 +21,10 @@ export default function SprachenAuswahl() {
     return (
         <Box sx={{ minWidth: 120 }}>
             <FormControl sx={{
+                position:"absolute",
                 width: "150px",
                 margin: "15px",
-                bottom: "540px",
+                top:"5px",
                 left: "1225px",
             }}>
                 <InputLabel id="auswahlLable">Sprache</InputLabel>
