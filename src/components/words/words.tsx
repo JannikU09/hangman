@@ -1,7 +1,6 @@
 "use client"
 
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { buchstabeState } from "@/src/state/buchstabeState";
 import { useAtom } from "jotai";
 import { Eingabe } from "../eingabe/eingabe";
@@ -53,7 +52,7 @@ export const Words = () => {
         const superWort = async () => {
             try {
                 const daten = await superWortFetch();
-                if (!daten || daten.length > 18 || daten.word.includes(" ") || selectedValue === "Neustarten") {
+                if (!daten || daten.length > 15 || daten.word.includes(" ")) {
                     await superWort();
                     return;
                 };
@@ -71,15 +70,13 @@ export const Words = () => {
         };
         superWort();
 
+
     }, [sprache, selectedValue]);
 
     useEffect(() => {
         setWort(wort.replace(/ß/g, "SS"));
     }, [wort]);
 
-    const mehrere = wort.includes(" ");
-
-    console.log("mehere", mehrere);
     console.log("Buchstaben: ", buchstabenList);
     console.log("Wortlänge", laenge);
 
