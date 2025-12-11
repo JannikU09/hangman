@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useTimer } from "use-timer";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { eingabeState } from "@/src/state/eingabeState";
 import { splittedWortState } from "@/src/state/splittedWortState";
 import { falschState } from "@/src/state/falschState";
+import { initZeitState, zeitState } from "@/src/state/zeitState";
 
 import "./stoppuhr.css";
 
@@ -12,7 +13,8 @@ export const Stoppuhr = () => {
     const [eingabe, setEingabe] = useAtom(eingabeState);
     const [splittedWort, setSplittedWort] = useAtom(splittedWortState);
     const [falsch, setFalsch] = useAtom(falschState);
-
+    const [zeit, setZeit] = useAtom(zeitState);
+    const initZeit = useAtomValue(initZeitState);
 
     const { time, start, pause, reset, status } = useTimer();
 
@@ -25,11 +27,18 @@ export const Stoppuhr = () => {
         }
     }, [eingabe]);
 
+    useEffect(() => {
+        if (initZeit >= time) {
+            setZeit(time + initZeit);
+        } else {
+            setZeit(zeit + 1);
+        }
+    }, [time, initZeit]);
 
     return (
         <>
             <p className="stoppuhr">
-                Zeit: {time} Sekunden
+                Zeit: {zeit} Sekunden
             </p>
         </>
     );
