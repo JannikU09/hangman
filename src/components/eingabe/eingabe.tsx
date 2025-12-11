@@ -12,16 +12,16 @@ import { wortState } from "@/src/state/wortState";
 import { eingabeState } from "@/src/state/eingabeState";
 import { splittedWortState } from "@/src/state/splittedWortState";
 import { falschState } from "@/src/state/falschState";
+import { richtigState } from "@/src/state/richtigState";
 
 
 export const Eingabe: React.FC = ({ }) => {
     const [eingabe, setEingabe] = useAtom(eingabeState);
     const [buchstabenList, setBuchstabenList] = useAtom(buchstabeState);
-    const [richtig, setRichtig] = useState<number>(0);
+    const [richtig, setRichtig] = useAtom(richtigState);
     const [falsch, setFalsch] = useAtom(falschState);
     const [stellen, setStellen] = useState<number[]>([]);
     const [wort, setWort] = useAtom(wortState);
-    const [vorhanden, setVorhanden] = useState<boolean>(false);
     const [splittedWort, setSplittedWort] = useAtom(splittedWortState);
 
 
@@ -35,60 +35,63 @@ export const Eingabe: React.FC = ({ }) => {
         setEingabe(event.target.value.toUpperCase());
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setEingabe("");
+    const handleSubmit = (event: React.KeyboardEvent<HTMLFormElement>) => {
+        console.log(event.key);
+        if (event.key === "Enter" && eingabe !== "") {
 
-        const includes = wort.includes(eingabe);
-        setVorhanden(includes);
+            event.preventDefault();
+            setEingabe("");
+
+            const includes = wort.includes(eingabe);
+
+            if (includes === true) {
+
+                //Wenn der Buchstabe richtig ist.
+                setRichtig(richtig + 1);
+
+            } else if (includes === false) {
+
+                //Wenn der Buchstabe falsch ist.
+                if (falsch <= 11) {
+                    setBuchstabenList([
+                        ...buchstabenList,
+                        { value: eingabe }
+                    ])
+                    setFalsch(falsch + 1);
+                };
+            }
 
 
-        if (includes === true) {
+            let indexes: number[] = [];
+            let position = 0;
+            while (position < wort.length) {
+                const index = wort.indexOf(eingabe, position);
 
-            //Wenn der Buchstabe richtig ist.
-            setRichtig(richtig + 1);
+                splittedWort[index] = eingabe;
 
-        } else if (includes === false) {
+                indexes = [...indexes, index + 1];
 
-            //Wenn der Buchstabe falsch ist.
-            if (falsch <= 11) {
-                setBuchstabenList([
-                    ...buchstabenList,
-                    { value: eingabe }
-                ])
-                setFalsch(falsch + 1);
-            };
+                position = index === wort.lastIndexOf(eingabe) ? wort.length : index + 1;
+            }
+
+
+            setStellen(indexes);
+
+            console.log(includes);
+            console.log("Eingabe: ", eingabe);
+            console.log("Index: ", indexes);
+            console.log("Richtig: ", richtig);
+            console.log("Falsch: ", falsch + 1);
         }
 
-
-
-        let indexes: number[] = [];
-        let position = 0;
-        while (position < wort.length) {
-            const index = wort.indexOf(eingabe, position);
-
-            splittedWort[index] = eingabe;
-
-            indexes = [...indexes, index + 1];
-
-            position = index === wort.lastIndexOf(eingabe) ? wort.length : index + 1;
-        }
-
-
-        setStellen(indexes);
-
-        console.log(includes);
-        console.log("Eingabe: ", eingabe);
-        console.log("Index: ", indexes);
-        console.log("Richtig: ", richtig);
-        console.log("Falsch: ", falsch + 1);
     };
+
+
 
     return (
         <>
             <Title title={falsch < 11 ? `${splittedWort.join(" ")}` : `${wort}`} size="smallTitle" />
-            <Title title={`Vorhanden: ${vorhanden}`} size="smallTitle" />
-            <Title title={`Stelle(n): ${stellen}`} size="smallTitle" />
+            <Title title={`Stelle(n): ${stellen.join(", ")}`} size="smallTitle" />
             <Title title={falsch < 11 ? `Richtig: ${richtig} || Falsch: ${falsch}/11` : "Zu viele Fehler."} size="smallTitle" />
 
             <div className="hangman">
@@ -106,7 +109,7 @@ export const Eingabe: React.FC = ({ }) => {
             </div>
 
 
-            <form onSubmit={handleSubmit}>
+            <form onKeyDown={handleSubmit}>
                 <textarea
                     value={eingabe}
                     onChange={handleChange}
@@ -116,20 +119,6 @@ export const Eingabe: React.FC = ({ }) => {
                     className="eingabeFeld"
                     disabled={falsch < 11 ? false : true}
                 />
-
-                <p>
-                    <input
-                        type="submit"
-                        value="Prüfen"
-                        className="eingabeFeld"
-                        disabled={falsch < 11 ? false : true}
-                        style={{
-                            fontWeight: "bold",
-                            cursor: "pointer",
-                            textTransform: "capitalize"
-                        }}
-                    />
-                </p>
             </form>
         </>
     );
