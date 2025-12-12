@@ -1,10 +1,6 @@
 "use client"
 
 import React, { useEffect } from "react";
-import { useState } from "react";
-
-import "./eingabe.css"
-import "./hangmanZeichnung.css"
 import { useAtom } from "jotai";
 import { buchstabeState } from "@/src/state/buchstabeState";
 import { Title } from "@/src/components/title/title";
@@ -13,22 +9,25 @@ import { eingabeState } from "@/src/state/eingabeState";
 import { splittedWortState } from "@/src/state/splittedWortState";
 import { falschState } from "@/src/state/falschState";
 import { richtigState } from "@/src/state/richtigState";
+import { stellenState } from "@/src/state/stellenState";
 
+import "./eingabe.css"
+import "./hangmanZeichnung.css"
 
 export const Eingabe: React.FC = ({ }) => {
     const [eingabe, setEingabe] = useAtom(eingabeState);
     const [buchstabenList, setBuchstabenList] = useAtom(buchstabeState);
     const [richtig, setRichtig] = useAtom(richtigState);
     const [falsch, setFalsch] = useAtom(falschState);
-    const [stellen, setStellen] = useState<number[]>([]);
-    const [wort, setWort] = useAtom(wortState);
+    const [stellen, setStellen] = useAtom(stellenState);
+    const [wort] = useAtom(wortState);
     const [splittedWort, setSplittedWort] = useAtom(splittedWortState);
 
 
     useEffect(() => {
-        const splittedWort = wort.split("").map(char => "_")
+        const splittedWort = wort.split("").map(() => "_")
         setSplittedWort(splittedWort);
-    }, [wort]);
+    }, [wort, setSplittedWort]);
 
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -62,19 +61,23 @@ export const Eingabe: React.FC = ({ }) => {
             }
 
 
-            let indexes: number[] = [];
+            const indexes: number[] = [];
             let position = 0;
             while (position < wort.length) {
                 const index = wort.indexOf(eingabe, position);
 
-                splittedWort[index] = eingabe;
+                if (index === -1) break;
 
-                indexes = [...indexes, index + 1];
-
-                position = index === wort.lastIndexOf(eingabe) ? wort.length : index + 1;
+                indexes.push(index);
+                position = index + 1;
             }
 
+            const platzhalter = [...splittedWort];
+            indexes.forEach((index) => {
+                platzhalter[index] = eingabe;
+            });
 
+            setSplittedWort(platzhalter);
             setStellen(indexes);
 
             console.log(includes);
@@ -82,7 +85,7 @@ export const Eingabe: React.FC = ({ }) => {
             console.log("Index: ", indexes);
             console.log("Richtig: ", richtig);
             console.log("Falsch: ", falsch + 1);
-        }
+        };
 
     };
 
