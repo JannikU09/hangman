@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useTimer } from "use-timer";
 import { useAtom, useAtomValue } from "jotai";
@@ -25,7 +26,7 @@ export const Stoppuhr = () => {
         } else if (splittedWort.includes("_") === false || falsch >= 11) {
             pause();
         }
-    }, [eingabe, falsch, pause, start, splittedWort]);
+    }, [eingabe]);
 
     useEffect(() => {
         if (initZeit >= time) {
@@ -33,7 +34,7 @@ export const Stoppuhr = () => {
         } else {
             setZeit(zeit + 1);
         }
-    }, [time, initZeit, setZeit, zeit]);
+    }, [time, initZeit]);
 
     return (
         <>
