@@ -9,6 +9,7 @@ import { initZeitState } from "@/src/state/zeitState";
 import { zeitState } from "@/src/state/zeitState";
 import { optionenState } from "@/src/state/optionenState";
 import { richtigState } from "@/src/state/richtigState";
+import { stellenState } from "@/src/state/stellenState";
 
 export const Reset = () => {
 
@@ -20,6 +21,7 @@ export const Reset = () => {
     const setZeit = useSetAtom(zeitState);
     const setInitZeit = useSetAtom(initZeitState);
     const setRichtig = useSetAtom(richtigState);
+    const setStellen = useSetAtom(stellenState);
 
 
     useEffect(() => {
@@ -32,8 +34,9 @@ export const Reset = () => {
             setZeit(0);
             setInitZeit(0);
             setSelectedValue("Weiterspielen");
+            setStellen([]);
         }
-    }, [selectedValue]);
+    }, [selectedValue, setSprache, setBuchstabenList, setEingabe, setFalsch, setRichtig, setZeit, setInitZeit, setSelectedValue, setStellen]);
 
     return(
         <>
