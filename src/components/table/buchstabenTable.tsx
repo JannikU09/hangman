@@ -13,7 +13,7 @@ type Buchstaben = {
 
 export const BuchstabenTable: FC = () => {
 
-    const [buchstabenList, setBuchstabenList] = useAtom(buchstabeState);
+    const [buchstabenList] = useAtom(buchstabeState);
 
     const columns = useMemo<MRT_ColumnDef<Buchstaben>[]>(
         () => [
@@ -41,7 +41,7 @@ export const BuchstabenTable: FC = () => {
                     </Box>
 
                 ),
-                Header: ({ header, column }) => {
+                Header: ({ header }) => {
 
                     return (
                         <Box
