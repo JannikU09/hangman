@@ -10,13 +10,13 @@ import "./stoppuhr.css";
 
 
 export const Stoppuhr = () => {
-    const [eingabe, setEingabe] = useAtom(eingabeState);
-    const [splittedWort, setSplittedWort] = useAtom(splittedWortState);
-    const [falsch, setFalsch] = useAtom(falschState);
+    const [eingabe] = useAtom(eingabeState);
+    const [splittedWort] = useAtom(splittedWortState);
+    const [falsch] = useAtom(falschState);
     const [zeit, setZeit] = useAtom(zeitState);
     const initZeit = useAtomValue(initZeitState);
 
-    const { time, start, pause, reset, status } = useTimer();
+    const { time, start, pause } = useTimer();
 
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export const Stoppuhr = () => {
         } else if (splittedWort.includes("_") === false || falsch >= 11) {
             pause();
         }
-    }, [eingabe]);
+    }, [eingabe, falsch, pause, start, splittedWort]);
 
     useEffect(() => {
         if (initZeit >= time) {
@@ -33,7 +33,7 @@ export const Stoppuhr = () => {
         } else {
             setZeit(zeit + 1);
         }
-    }, [time, initZeit]);
+    }, [time, initZeit, setZeit, zeit]);
 
     return (
         <>
