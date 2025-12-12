@@ -10,7 +10,6 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
-import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
 import { Avatar } from '@mui/material';
 import { falschState } from '@/src/state/falschState';
@@ -19,7 +18,6 @@ import { splittedWortState } from '@/src/state/splittedWortState';
 import { eingabeState } from '@/src/state/eingabeState';
 
 import "@/src/components/dialog/dialog.css";
-import { Words } from '../words/words';
 
 const optionen = ['Weiterspielen', 'Neustarten'];
 
@@ -71,9 +69,9 @@ function SimpleDialog(props: SimpleDialogProps) {
 export default function SimpleDialogDemo() {
     const [open, setOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useAtom(optionenState);
-    const [falsch, setFalsch] = useAtom(falschState);
-    const [splittedWort, setSplittedWort] = useAtom(splittedWortState);
-    const [eingabe, setEingabe] = useAtom(eingabeState);
+    const [falsch] = useAtom(falschState);
+    const [splittedWort] = useAtom(splittedWortState);
+    const [eingabe] = useAtom(eingabeState);
 
 
     const handleClickOpen = () => {
@@ -82,14 +80,14 @@ export default function SimpleDialogDemo() {
 
     const handleClose = (value: string) => {
         setOpen(false);
-        setSelectedValue(value);        
+        setSelectedValue(value);
     };
 
     useEffect(() => {
         if (splittedWort.includes("_") === false || falsch >= 11) {
             setTimeout(handleClickOpen, 750);
         };
-    }, [eingabe]);
+    }, [eingabe, falsch, splittedWort]);
 
     console.log(selectedValue);
 
