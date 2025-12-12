@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useEffect } from "react";
-import { buchstabeState } from "@/src/state/buchstabeState";
 import { useAtom } from "jotai";
 import { wortState } from "@/src/state/wortState";
 import { ausgewähltState } from "@/src/state/ausgewähltState";
@@ -18,13 +17,13 @@ type Wort = {
 
 export const Words = () => {
 
-    const [selectedValue, setSelectedValue] = useAtom(optionenState);
+    const [selectedValue] = useAtom(optionenState);
     const [wort, setWort] = useAtom(wortState);
-    const [sprache, setSprache] = useAtom(ausgewähltState)
+    const [sprache] = useAtom(ausgewähltState)
 
 
     useEffect(() => {
-        if (selectedValue === "Neustarten" || sprache === "") {
+        if (selectedValue === "Neustarten") {
 
             const superWortFetch = async () => {
                 try {
@@ -67,7 +66,7 @@ export const Words = () => {
             };
             superWort();
         }
-    }, [selectedValue, sprache])
+    }, [selectedValue, sprache, setWort, wort]);
 
     return (
         <>
